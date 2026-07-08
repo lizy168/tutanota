@@ -38,11 +38,13 @@ o.spec("EntityFunctionsTest", function () {
 						cardinality: Cardinality.One,
 						final: true,
 						encrypted: true,
+						idForAssociatedData: null,
 					},
 				},
 				associations: {},
 				version: 1,
 				versioned: false,
+				idForSubKeyContext: null,
 			},
 		}
 		const partialServerModel: ServerModels = {

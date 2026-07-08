@@ -1,4 +1,4 @@
-import { assertNotNull, lazyAsync } from "@tutao/utils"
+import { assertNotNull, lazyAsync, Nullable } from "@tutao/utils"
 import { type AppName, AppNameEnum, TypeRef } from "../meta/TypeRef.js"
 import type { AttributeId, ClientTypeModel, ModelAssociation, ModelValue, ServerTypeModel } from "../meta/EntityTypes"
 import { AssociationType, Cardinality, Type, ValueType } from "../meta/EntityConstants.js"
@@ -217,6 +217,7 @@ export class ServerModelInfo {
 			encrypted: this.asBoolean(typeInfoRecord.encrypted),
 			isPublic: this.asBoolean(typeInfoRecord.isPublic),
 			rootId: this.asString(typeInfoRecord.rootId),
+			idForSubKeyContext: this.asNullableNumber(typeInfoRecord.idForAssociatedData),
 			values: this.parseModelValues(valuesRecord, this.getClientModelType(app, String(typeId))),
 			associations: this.parseModelAssociations(associationsRecord),
 		} as ServerTypeModel
@@ -245,6 +246,7 @@ export class ServerModelInfo {
 				type: this.ensureVariantOf(ValueType, String(modelValueInfoRecord.type)),
 				encrypted: serverEncrypted,
 				cardinality: this.ensureVariantOf(Cardinality, String(modelValueInfoRecord.cardinality)),
+				idForAssociatedData: this.asNullableNumber(modelValueInfoRecord.idForAssociatedData),
 			}
 
 			Object.assign(values, { [modelValue.id]: modelValue })
@@ -265,6 +267,7 @@ export class ServerModelInfo {
 				type: this.ensureVariantOf(AssociationType, String(associationInfoRecord.type)),
 				cardinality: this.ensureVariantOf(Cardinality, String(associationInfoRecord.cardinality)),
 				refTypeId: this.asNumber(associationInfoRecord.refTypeId),
+				idForAssociatedData: this.asNullableNumber(associationInfoRecord.idForAssociatedData),
 			}
 
 			// dependency can be null, so assign it after above `verifyNoNullValueInRecord` check. and check here instead
@@ -304,6 +307,12 @@ export class ServerModelInfo {
 
 	private asNumber(value: any): number {
 		if (value != null && (typeof value === "string" || typeof value === "number")) return parseInt(value.toString())
+		else throw new Error(`value ${value} is not number compatible`)
+	}
+
+	private asNullableNumber(value: any): Nullable<number> {
+		if (value == null) return null
+		if (typeof value === "string" || typeof value === "number") return parseInt(value.toString())
 		else throw new Error(`value ${value} is not number compatible`)
 	}
 
