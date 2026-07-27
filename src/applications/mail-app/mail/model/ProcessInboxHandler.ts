@@ -88,7 +88,7 @@ export class ProcessInboxHandler {
 		const mailDetails = await this.mailFacade.loadMailDetailsBlob(mail)
 
 		let finalProcessInboxDatum: Nullable<UnencryptedProcessInboxDatum> = null
-		let moveToFolder: MailSet = sourceFolder
+		let moveToFolder: MailSet
 
 		const matchingInboxRule = await this.inboxRuleHandler()?.findMatchingInboxRule(mailboxDetail, mail, sourceFolder)
 		if (!matchingInboxRule || !matchingInboxRule.excludeFromSpamFilter) {
@@ -113,7 +113,7 @@ export class ProcessInboxHandler {
 
 		// set processInboxDatum if the spam classification is disabled and no inbox rule applies to the mail
 		if (finalProcessInboxDatum === null) {
-			const { uploadableVector, uploadableVectorLegacy } = await this.mailFacade.createModelInputAndUploadableVectors(mail, mailDetails, sourceFolder)
+			const { uploadableVector, uploadableVectorLegacy } = await this.mailFacade.createModelInputAndUploadableVectors(mail, mailDetails)
 			finalProcessInboxDatum = {
 				mailId: mail._id,
 				targetMoveFolder: moveToFolder._id,
@@ -155,7 +155,7 @@ export class ProcessInboxHandler {
 		// process excluded rules first and then regular ones.
 		const result = await this.inboxRuleHandler()?.findMatchingInboxRule(mailboxDetail, mail, sourceFolder, true)
 		if (result) {
-			const { targetFolder, processInboxDatum: _ } = result
+			const { targetFolder } = result
 			moveToFolder = targetFolder
 		}
 
