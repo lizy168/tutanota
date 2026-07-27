@@ -3766,6 +3766,8 @@ pub struct ImportMailPostIn {
 	pub encImports: Vec<super::sys::StringWrapper>,
 	#[serde(rename = "1964")]
 	pub imapFolderSyncState: Option<IdTupleGenerated>,
+	#[serde(rename = "1990")]
+	pub labels: Vec<IdTupleGenerated>,
 }
 
 impl Entity for ImportMailPostIn {
@@ -4574,7 +4576,7 @@ pub struct ImapFolderSyncState {
 	#[serde(rename = "1909")]
 	pub importedMails: GeneratedId,
 	#[serde(rename = "1910")]
-	pub mailFolder: Option<IdTupleGenerated>,
+	pub mailSet: Option<IdTupleGenerated>,
 	#[serde(rename = "1928")]
 	pub imapAccountSyncState: IdTupleGenerated,
 
@@ -4659,7 +4661,7 @@ pub struct ImapFolderPostIn {
 	#[serde(rename = "1935")]
 	pub imapAccountSyncState: IdTupleGenerated,
 	#[serde(rename = "1936")]
-	pub mailFolder: Option<IdTupleGenerated>,
+	pub mailSet: Option<IdTupleGenerated>,
 
 	#[serde(default)]
 	pub _errors: Errors,

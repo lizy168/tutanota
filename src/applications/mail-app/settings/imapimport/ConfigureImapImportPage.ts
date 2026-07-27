@@ -29,7 +29,7 @@ import { showEditFolderDialog } from "../../mail/view/EditFolderDialog"
 import { Card } from "../../../../ui/base/Card"
 import { MailSetMapping } from "../../workerUtils/imapimport/ImapImporter"
 import { Dialog } from "../../../../ui/base/Dialog"
-import { getTranslationForImapProvider } from "../../../common/api/common/utils/imapImportUtils/ImapKnownConfigs"
+import { getTranslationForImapProvider, ImapProvider } from "../../../common/api/common/utils/imapImportUtils/ImapKnownConfigs"
 import { showProgressDialog } from "../../../../ui/dialogs/ProgressDialog"
 import { Checkbox } from "../../../../ui/base/Checkbox"
 import { ImapCredentials } from "../../../common/api/common/utils/imapImportUtils/ImapSyncContext"
@@ -40,6 +40,7 @@ class ConfigureImapImportPage implements WizardPageN<ImapImportData> {
 	private shouldDisplayFolderTextField: boolean = true
 	private shouldDisplayLabelField: boolean = false
 	private imapMailboxes: ImapMailbox[] = []
+	private shouldDisplayFolderMappingSwitch: boolean = true
 	private imapMailboxesToTutaFolders: Map<string, MailSetMapping> | null = null
 	private folderSystem: FolderSystem = new FolderSystem([])
 	private titleSectionParams = {
@@ -62,6 +63,7 @@ class ConfigureImapImportPage implements WizardPageN<ImapImportData> {
 
 		const imapImportController = mailLocator.getImapMailImportController()
 		const imapImportData = vnode.attrs.data
+		this.shouldDisplayFolderMappingSwitch = imapImportData.imapProvider !== ImapProvider.Gmail
 		const imapCredentials = this.getImapCredentials(imapImportData)
 
 		this.folderSystem = await imapImportController.getFolderSystemForSelectedMailbox()
@@ -201,38 +203,40 @@ class ConfigureImapImportPage implements WizardPageN<ImapImportData> {
 						helpLabel: () => lang.getTranslationText("migrationLabelInput_helpLabel"),
 					})
 				: null,
-			m(".tutaui-switch.mt-16", [
-				m(Switch, {
-					ariaLabel: "matchMigrationFoldersToTutaMailSets_label",
-					checked: data.matchImapMailboxesToTutaMailSets,
-					onclick: (checked: boolean) => {
-						obj.shouldDisplayFolderTextField = !checked
-						data.matchImapMailboxesToTutaMailSets = checked
-						if (checked) {
-							data.rootImportMailFolderName = ""
-						}
-						m.redraw()
-					},
-				}),
-				m("", lang.getTranslationText("matchMigrationFoldersToTutaMailSets_label")),
-				m(IconButton, {
-					icon: Icons.QuestionmarkFilled,
-					title: "migrationFolderMapping_title",
-					click: this.updateHoverMessage("migrationConfigurationLinkFoldersInfo_msg"),
-				}),
-				!this.shouldDisplayFolderTextField && this.successfullyLoadedMailboxes && !isFolderMappingCompleted
-					? m(
-							"",
-							{
-								style: {
-									minWidth: "100px",
-									marginLeft: "auto",
-								},
+			this.shouldDisplayFolderMappingSwitch
+				? m(".tutaui-switch.mt-16", [
+						m(Switch, {
+							ariaLabel: "matchMigrationFoldersToTutaMailSets_label",
+							checked: data.matchImapMailboxesToTutaMailSets,
+							onclick: (checked: boolean) => {
+								obj.shouldDisplayFolderTextField = !checked
+								data.matchImapMailboxesToTutaMailSets = checked
+								if (checked) {
+									data.rootImportMailFolderName = ""
+								}
+								m.redraw()
 							},
-							this.renderCreateAllMissingFoldersButton(data),
-						)
-					: null,
-			]),
+						}),
+						m("", lang.getTranslationText("matchMigrationFoldersToTutaMailSets_label")),
+						m(IconButton, {
+							icon: Icons.QuestionmarkFilled,
+							title: "migrationFolderMapping_title",
+							click: this.updateHoverMessage("migrationConfigurationLinkFoldersInfo_msg"),
+						}),
+						!this.shouldDisplayFolderTextField && this.successfullyLoadedMailboxes && !isFolderMappingCompleted
+							? m(
+									"",
+									{
+										style: {
+											minWidth: "100px",
+											marginLeft: "auto",
+										},
+									},
+									this.renderCreateAllMissingFoldersButton(data),
+								)
+							: null,
+					])
+				: null,
 			this.shouldDisplayFolderTextField
 				? m(TextField, {
 						label: "migrationRootMailFolderName_label",

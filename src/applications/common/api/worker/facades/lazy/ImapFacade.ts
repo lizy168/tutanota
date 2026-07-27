@@ -39,7 +39,7 @@ import {
 	DEFAULT_EXTRA_SERVICE_PARAMS,
 	EntityRestClientLoadOptions,
 } from "../../../../../../platform-kit/instance-pipeline/RestClientOptions"
-import { getElementId } from "@tutao/meta"
+import { getElementId, isSameId } from "@tutao/meta"
 import { parseKeyVersion } from "../../../../../../platform-kit/crypto/CryptoUtils"
 
 export class ImapFacade {
@@ -154,7 +154,7 @@ export class ImapFacade {
 				ownerGroup: mailGroupId,
 				path: imapMailboxPath,
 				imapAccountSyncState: imapAccountSyncState._id,
-				mailFolder: shouldSync ? [mailbox.mailSets.mailSets, mailSetElementId] : null,
+				mailSet: shouldSync ? [mailbox.mailSets.mailSets, mailSetElementId] : null,
 			})
 			const imapFolderPostOut = await this.serviceExecutor.post(ImapFolderService, imapFolderPostIn, {
 				...DEFAULT_EXTRA_SERVICE_PARAMS,
@@ -166,15 +166,28 @@ export class ImapFacade {
 		return imapFolderSyncStates
 	}
 
-	async initializeImapMailFolder(
+	async initializeImapMailSet(
 		imapMailbox: ImapMailbox,
 		imapAccountSyncState: ImapAccountSyncState,
 		parentFolderId: IdTuple | null,
 		shouldSync: boolean,
+		shouldCreateLabels: boolean,
 	): Promise<ImapFolderSyncState | undefined> {
 		if (imapMailbox.name) {
 			const mailGroupId = assertNotNull(imapAccountSyncState._ownerGroup)
-			const mailFolderId = shouldSync ? await this.mailFacade.createMailFolder(imapMailbox.name, parentFolderId, mailGroupId) : null
+			let mailSetId: IdTuple | null
+			if (shouldCreateLabels) {
+				mailSetId = shouldSync
+					? await this.mailFacade.createLabel(mailGroupId, {
+							name: imapMailbox.name,
+							color: randomHexColor(),
+							parentLabelId:
+								!isSameId(parentFolderId, imapAccountSyncState.rootImportMailFolder) && parentFolderId !== null ? parentFolderId : undefined,
+						})
+					: null
+			} else {
+				mailSetId = shouldSync ? await this.mailFacade.createMailFolder(imapMailbox.name, parentFolderId, mailGroupId) : null
+			}
 
 			const mailGroupKey = await this.keyLoader.getCurrentSymGroupKey(mailGroupId)
 			const sk = this.cryptoWrapper.aes256RandomKey()
@@ -186,7 +199,7 @@ export class ImapFacade {
 				ownerGroup: mailGroupId,
 				path: imapMailbox.path,
 				imapAccountSyncState: imapAccountSyncState._id,
-				mailFolder: mailFolderId,
+				mailSet: mailSetId,
 			})
 
 			const imapFolderPostOut = await this.serviceExecutor.post(ImapFolderService, imapFolderPostIn, {
@@ -246,4 +259,13 @@ export class ImapFacade {
 	async getAllImapFolderSyncStates(imapFolderSyncStateListId: Id): Promise<ImapFolderSyncState[]> {
 		return this.entityClient.loadAll(ImapFolderSyncStateTypeRef, imapFolderSyncStateListId)
 	}
+}
+
+function randomHexColor() {
+	return (
+		"#" +
+		Math.floor(Math.random() * 0x1000000)
+			.toString(16)
+			.padStart(6, "0")
+	)
 }

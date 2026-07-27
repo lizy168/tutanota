@@ -235,7 +235,7 @@ o.spec("ImapImporter", () => {
 		const session = newImapImportSession(accountSyncStateMock, [])
 		importer.imapImportSessions.set(importer.getImapImportSessionsMapKey(accountSyncStateIdMock), session)
 
-		when(imapFacadeMock.initializeImapMailFolder(imapMailboxMock, session.imapAccountSyncState, null, true)).thenResolve(folderSyncStateMock)
+		when(imapFacadeMock.initializeImapMailSet(imapMailboxMock, session.imapAccountSyncState, null, true)).thenResolve(folderSyncStateMock)
 
 		await importer.onMailbox(accountSyncStateIdMock, imapMailboxMock, ImapSyncEventType.CREATE)
 

@@ -8843,6 +8843,15 @@ const typeModels = {
 				"cardinality": "ZeroOrOne",
 				"refTypeId": 1895,
 				"dependency": null
+			},
+			"1990": {
+				"final": false,
+				"name": "labels",
+				"id": 1990,
+				"type": "LIST_ELEMENT_ASSOCIATION_GENERATED",
+				"cardinality": "Any",
+				"refTypeId": 429,
+				"dependency": null
 			}
 		}
 	},
@@ -10706,7 +10715,7 @@ const typeModels = {
 			},
 			"1910": {
 				"final": true,
-				"name": "mailFolder",
+				"name": "mailSet",
 				"id": 1910,
 				"type": "LIST_ELEMENT_ASSOCIATION_GENERATED",
 				"cardinality": "ZeroOrOne",
@@ -10937,7 +10946,7 @@ const typeModels = {
 			},
 			"1936": {
 				"final": true,
-				"name": "mailFolder",
+				"name": "mailSet",
 				"id": 1936,
 				"type": "LIST_ELEMENT_ASSOCIATION_GENERATED",
 				"cardinality": "ZeroOrOne",

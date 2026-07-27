@@ -175,7 +175,7 @@ o.spec("ImapFacade", () => {
 		when(serviceExecutorMock.post(ImapFolderService, anything(), anything())).thenResolve(postOutMock)
 		when(entityClientMock.load(ImapFolderSyncStateTypeRef, imapFolderSyncStateIdMock)).thenResolve(imapFolderSyncStateMock)
 
-		await imapFacade.initializeImapMailFolder(imapMailbox, imapAccountSyncStateMock, null, true)
+		await imapFacade.initializeImapMailSet(imapMailbox, imapAccountSyncStateMock, null, true)
 
 		verify(serviceExecutorMock.post(ImapFolderService, anything(), anything()), { times: 1 })
 	})
@@ -189,14 +189,14 @@ o.spec("ImapFacade", () => {
 		when(serviceExecutorMock.post(ImapFolderService, anything(), anything())).thenResolve(postOutMock)
 		when(entityClientMock.load(ImapFolderSyncStateTypeRef, imapFolderSyncStateIdMock)).thenResolve(imapFolderSyncStateMock)
 
-		await imapFacade.initializeImapMailFolder(imapMailbox, imapAccountSyncStateMock, null, true)
+		await imapFacade.initializeImapMailSet(imapMailbox, imapAccountSyncStateMock, null, true)
 
 		verify(mailFacadeMock.createMailFolder("Sent", null, mailGroupId), { times: 1 })
 	})
 
 	o.test("createImportMailFolder - returns undefined if imapMailbox.name is falsy", async () => {
 		const imapMailbox: ImapMailbox = { path: "", name: "" }
-		const result = await imapFacade.initializeImapMailFolder(imapMailbox, imapAccountSyncStateMock, null, true)
+		const result = await imapFacade.initializeImapMailSet(imapMailbox, imapAccountSyncStateMock, null, true)
 		o.check(result).equals(undefined)
 	})
 

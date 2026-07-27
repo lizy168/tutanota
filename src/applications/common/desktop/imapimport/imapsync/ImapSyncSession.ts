@@ -3,7 +3,7 @@ import { ImapCredentials, ImapSyncContext } from "../../../api/common/utils/imap
 import type { ImapSyncEventListener } from "./ImapSyncEventListener.js"
 import { ImapSyncSessionProcess, SyncSessionProcessState } from "./ImapSyncSessionProcess.js"
 import { ProgrammingError } from "@tutao/app-env"
-import { ImapMailbox, imapMailboxFromImapFlowListTreeResponse } from "../../../api/common/utils/imapImportUtils/ImapMailbox.js"
+import { ImapMailbox, imapMailboxFromImapFlowListTreeResponse, ImapMailboxSpecialUse } from "../../../api/common/utils/imapImportUtils/ImapMailbox.js"
 import { ImapSyncConfig } from "./ImapSync.js"
 import { fromImapFlowError, ImapError, ImapErrorCause } from "../../../api/common/error/ImapError"
 import type { ImapFlow, ListTreeResponse } from "imapflow"
@@ -121,6 +121,7 @@ export class ImapSyncSession implements SyncSessionEventListener {
 		if (setupResult instanceof ImapError) {
 			throw setupResult
 		}
+		console.log("setupResult", setupResult)
 		this.syncSessionMailboxes = setupResult as ImapSyncSessionMailbox[]
 
 		if (this.syncSessionMailboxes != null) {
@@ -143,7 +144,11 @@ export class ImapSyncSession implements SyncSessionEventListener {
 
 			const fetchedRootMailboxes = await this.getImapMailboxes(imapClient)
 
-			return await this.getSyncSessionMailboxes(knownMailboxes, fetchedRootMailboxes)
+			let imapSyncSessionMailboxes = await this.getSyncSessionMailboxes(knownMailboxes, fetchedRootMailboxes)
+			if (this.imapSyncContext.shouldOnlyFetchAllMails) {
+				imapSyncSessionMailboxes = imapSyncSessionMailboxes.filter((syncSessionMailbox) => syncSessionMailbox.specialUse === ImapMailboxSpecialUse.ALL)
+			}
+			return imapSyncSessionMailboxes
 		} catch (error) {
 			console.error("Error during sync", error, error?.serverResponseCode)
 			if (error.authenticationFailed || error?.serverResponseCode === "AUTHENTICATIONFAILED") {

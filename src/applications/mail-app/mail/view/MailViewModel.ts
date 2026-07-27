@@ -42,7 +42,7 @@ import {
 import { ImapFolderSyncStatus, MailSetKind, SystemFolderType } from "../../../../entities/tutanota/Utils"
 import { collapseId, elementIdPart, getElementId, isSameId, OperationType } from "../../../../platform-kit/meta"
 import { EntityUpdateData, isUpdateForTypeRef, OnEntityUpdateReceivedPriority } from "../../../../platform-kit/instance-pipeline/utils/EntityUpdateUtils"
-import { getMailSetKind, isPermanentDeleteAllowedForFolder } from "../MailUtils"
+import { getMailSetKind, isLabel, isPermanentDeleteAllowedForFolder } from "../MailUtils"
 import { ProgrammingError } from "../../../../platform-kit/app-env"
 import { $Promisable } from "../../workerUtils/index/IndexerPromiseUtils"
 import { CacheMode, DEFAULT_ENTITY_RESTCLIENT_LOAD_OPTIONS } from "../../../../platform-kit/instance-pipeline/RestClientOptions"
@@ -721,14 +721,7 @@ export class MailViewModel {
 					await this.deleteMailSetEntryRangeFolder(targetFolder)
 				}
 			} else if (update.operation === OperationType.CREATE && isUpdateForTypeRef(ImapFolderSyncStateTypeRef, update)) {
-				const targetFolder = await this.getImapImportTargetFolder(update)
-				if (targetFolder) {
-					await this.deleteMailSetEntryRangeFolder(targetFolder)
-				}
-				const imapSyncLabel = await this.getImapSyncLabel(update)
-				if (imapSyncLabel) {
-					await this.deleteMailSetEntryRangeFolder(imapSyncLabel)
-				}
+				await this.handleImapFolderSyncStateUpdate(update)
 			} else if (update.operation === OperationType.UPDATE) {
 				if (isUpdateForTypeRef(MailTypeRef, update) && isSameId(this.stickyMailId, [update.instanceListId, update.instanceId])) {
 					const mailId: IdTuple = [update.instanceListId, update.instanceId]
@@ -743,18 +736,28 @@ export class MailViewModel {
 						await this.deleteMailSetEntryRangeFolder(targetFolder)
 					}
 				} else if (isUpdateForTypeRef(ImapFolderSyncStateTypeRef, update)) {
-					const targetFolder = await this.getImapImportTargetFolder(update)
-					if (targetFolder) {
-						await this.deleteMailSetEntryRangeFolder(targetFolder)
-					}
-					const imapSyncLabel = await this.getImapSyncLabel(update)
-					if (imapSyncLabel) {
-						await this.deleteMailSetEntryRangeFolder(imapSyncLabel)
-					}
+					await this.handleImapFolderSyncStateUpdate(update)
 				}
 			}
 
 			await listModel.handleEntityUpdate(update)
+		}
+	}
+
+	private async handleImapFolderSyncStateUpdate(update: EntityUpdateData<ImapFolderSyncState>) {
+		const targetMailSet = await this.getImapImportTargetMailSet(update)
+		if (targetMailSet) {
+			await this.deleteMailSetEntryRangeFolder(targetMailSet)
+			if (isLabel(targetMailSet)) {
+				const rootImportMailFolder = await this.getRootImportMailFolder(update)
+				if (rootImportMailFolder) {
+					await this.deleteMailSetEntryRangeFolder(rootImportMailFolder)
+				}
+			}
+		}
+		const imapSyncLabel = await this.getImapSyncLabel(update)
+		if (imapSyncLabel) {
+			await this.deleteMailSetEntryRangeFolder(imapSyncLabel)
 		}
 	}
 
@@ -763,6 +766,16 @@ export class MailViewModel {
 		const imapAccountSyncState = await this.entityClient.load(ImapAccountSyncStateTypeRef, imapFolderSyncState.imapAccountSyncState)
 		if (imapAccountSyncState.imapSyncLabel) {
 			return await this.entityClient.load(MailSetTypeRef, imapAccountSyncState.imapSyncLabel)
+		} else {
+			return null
+		}
+	}
+
+	private async getRootImportMailFolder(update: EntityUpdateData): Promise<MailSet | null> {
+		const imapFolderSyncState = await this.entityClient.load(ImapFolderSyncStateTypeRef, collapseId(update.instanceListId, update.instanceId) as IdTuple)
+		const imapAccountSyncState = await this.entityClient.load(ImapAccountSyncStateTypeRef, imapFolderSyncState.imapAccountSyncState)
+		if (imapAccountSyncState.rootImportMailFolder) {
+			return await this.entityClient.load(MailSetTypeRef, imapAccountSyncState.rootImportMailFolder)
 		} else {
 			return null
 		}
@@ -790,10 +803,10 @@ export class MailViewModel {
 		return await this.mailModel.getMailSetById(elementIdPart(importMailState.targetFolder))
 	}
 
-	private async getImapImportTargetFolder(update: EntityUpdateData) {
+	private async getImapImportTargetMailSet(update: EntityUpdateData) {
 		const imapFolderSyncState = await this.entityClient.load(ImapFolderSyncStateTypeRef, [update.instanceListId!, update.instanceId])
-		if (imapFolderSyncState.mailFolder && imapFolderSyncState.status !== ImapFolderSyncStatus.RUNNING) {
-			return await this.mailModel.getMailSetById(elementIdPart(imapFolderSyncState.mailFolder))
+		if (imapFolderSyncState.mailSet && imapFolderSyncState.status !== ImapFolderSyncStatus.RUNNING) {
+			return await this.mailModel.getMailSetById(elementIdPart(imapFolderSyncState.mailSet))
 		} else {
 			return null
 		}

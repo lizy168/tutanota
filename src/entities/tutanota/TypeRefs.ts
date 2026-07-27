@@ -2399,6 +2399,7 @@ export type ImportMailPostIn = {
 	importFileMailState: null | IdTuple;
 	encImports: StringWrapper[];
 	imapFolderSyncState: null | IdTuple;
+	labels: IdTuple[];
 }
 export const ImportMailPostOutTypeRef: TypeRef<ImportMailPostOut> = new TypeRef("tutanota", 1579)
 
@@ -2933,7 +2934,7 @@ export type ImapFolderSyncState = {
 	highestmodseq: null | NumberString;
 
 	importedMails: Id;
-	mailFolder: null | IdTuple;
+	mailSet: null | IdTuple;
 	imapAccountSyncState: IdTuple;
 }
 export const ImapAccountSyncStateTypeRef: TypeRef<ImapAccountSyncState> = new TypeRef("tutanota", 1911)
@@ -2983,7 +2984,7 @@ export type ImapFolderPostIn = {
 	path: string;
 
 	imapAccountSyncState: IdTuple;
-	mailFolder: null | IdTuple;
+	mailSet: null | IdTuple;
 }
 export const ImapFolderPostOutTypeRef: TypeRef<ImapFolderPostOut> = new TypeRef("tutanota", 1937)
 

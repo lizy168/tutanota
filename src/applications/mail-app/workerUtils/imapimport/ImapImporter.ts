@@ -1,4 +1,4 @@
-import { ImapCredentials, ImapMailboxState, ImapMailId } from "../../../common/api/common/utils/imapImportUtils/ImapSyncContext.js"
+import { ImapCredentials, ImapMailboxState, ImapMailId, ImapSyncContext } from "../../../common/api/common/utils/imapImportUtils/ImapSyncContext.js"
 import { ImapMailbox, ImapMailboxStatus } from "../../../common/api/common/utils/imapImportUtils/ImapMailbox.js"
 import { ImapMail, ImapMailAttachment } from "../../../common/api/common/utils/imapImportUtils/ImapMail.js"
 import { ImapError } from "../../../common/api/common/error/ImapError.js"
@@ -157,7 +157,8 @@ export class ImapImporter implements ImapSyncFacade {
 		const imapCredentials = imapAccountToImapCredentials(session.imapAccountSyncState.imapAccount)
 		const maxQuota = parseInt(session.imapAccountSyncState.maxQuota)
 		const imapMailboxStates = await this.getAllImapMailboxStates(session)
-		const imapSyncContext = { imapCredentials, maxQuota, imapMailboxStates }
+		const shouldOnlyFetchAllMails = (parseInt(session.imapAccountSyncState.provider) as ImapProvider) === ImapProvider.Gmail
+		const imapSyncContext: ImapSyncContext = { imapCredentials, maxQuota, imapMailboxStates, shouldOnlyFetchAllMails }
 
 		const mailGroupId = assertNotNull(session.imapAccountSyncState._ownerGroup)
 		const hashToIdMap = await this.getImportedImapAttachmentHashToIdMap(session)
@@ -311,23 +312,24 @@ export class ImapImporter implements ImapSyncFacade {
 
 	async onMailbox(accountSyncStateId: IdTuple, imapMailbox: ImapMailbox, eventType: ImapSyncEventType): Promise<void> {
 		const session = assertNotNull(this.getImapImportSessionOrNull(accountSyncStateId))
-
+		const shouldCreateLabels = (parseInt(session.imapAccountSyncState.provider) as ImapProvider) === ImapProvider.Gmail
 		switch (eventType) {
 			case ImapSyncEventType.CREATE: {
 				let parentFolderId = session.imapAccountSyncState.rootImportMailFolder
 				let parentFolderSyncState: ImapFolderSyncState | null = null
 				if (imapMailbox.parentFolder) {
 					parentFolderSyncState = getFolderSyncStateForMailboxPath(imapMailbox.parentFolder.path, session.imapFolderSyncStates)
-					parentFolderId = parentFolderSyncState?.mailFolder ? parentFolderSyncState.mailFolder : null
+					parentFolderId = parentFolderSyncState?.mailSet ? parentFolderSyncState.mailSet : null
 				}
 
 				if (!session.imapFolderSyncStates.some((folder) => folder.path === imapMailbox.path)) {
 					const shouldSync = parentFolderSyncState === null || parentFolderSyncState.status !== ImapFolderSyncStatus.NO_SYNC
-					const folderSyncState = await this.imapFacade.initializeImapMailFolder(
+					const folderSyncState = await this.imapFacade.initializeImapMailSet(
 						imapMailbox,
 						session.imapAccountSyncState,
 						parentFolderId,
 						shouldSync,
+						shouldCreateLabels,
 					)
 					if (folderSyncState) {
 						const folderSyncStateIndex = session.imapFolderSyncStates.findIndex((imapFolderSyncState) =>
