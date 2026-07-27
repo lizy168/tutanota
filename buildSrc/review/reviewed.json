@@ -6376,7 +6376,7 @@
 	},
 	"node_modules/app-builder-lib/out/node-module-collector/packageManager.js": {
 		"who": "ivk",
-		"when": "2026-02-25",
+		"when": "2026-07-27",
 		"hash": "ff348915c27c3625f856a2d81b33374361fe5f3871aa5c9a26cfd6ee424b93d2"
 	},
 	"node_modules/y18n/build/index.cjs": {
@@ -8573,5 +8573,270 @@
 		"who": "ivk, mab",
 		"when": "2026-03-27",
 		"hash": "88bdbc15527e0345b44c9a92a6e2ae53f18ba182f383ef0b26a51befdda5e18e"
+	},
+	"node_modules/app-builder-lib/node_modules/ci-info/vendors.json": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "0328633dd00a573777cc47c1d5790ad494becc9f3436ed723bd1a66f6515e003"
+	},
+	"node_modules/app-builder-lib/node_modules/ci-info/index.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "94772d86a718ebeefa1273918175b3816fa051a4d544ce565bcc53c58d5fc74f"
+	},
+	"node_modules/brace-expansion/dist/commonjs/index.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "994eb761eca1c861f586ce6ab31bc2e7a6bc020dc4d6636d5e8b778c366d133f"
+	},
+	"node_modules/@electron/fuses/node_modules/fs-extra/lib/fs/index.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "6fc38ce67d60cc5dc9b52a6385ff133007fb1bc446bfc6ccc5971a4b418eec27"
+	},
+	"node_modules/at-least-node/index.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "b71333cd05a553a7f4a9451d942d0f8ced014909ef2a268baef6f411f31cc6e4"
+	},
+	"node_modules/@electron/fuses/node_modules/fs-extra/lib/mkdirs/make-dir.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "58755be7dd1c7a78a7c137c7eea18c2e6ccfe221a720ae1da2a0fff3dc3114d4"
+	},
+	"node_modules/@electron/fuses/node_modules/fs-extra/lib/empty/index.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "e32d83a6fd73dd1399e5a755f34d070788a68b0f215a679945b226c1b3f00a8b"
+	},
+	"node_modules/@electron/fuses/node_modules/fs-extra/lib/util/stat.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "c92fca3e541916d2138c18bcd887a6e4fa46bb2e9746cc05d63ba2edc522cf5d"
+	},
+	"node_modules/@electron/fuses/node_modules/fs-extra/lib/copy-sync/copy-sync.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "c9e73ad9492a4a1e2242f1e941302d01f21f3978fa30119db2b3eaad17feb87d"
+	},
+	"node_modules/@electron/fuses/node_modules/fs-extra/lib/copy-sync/index.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "43d2fc28f9a6071056f3055cca70d810555a7229c93c70810881c048bf3dce73"
+	},
+	"node_modules/@electron/fuses/node_modules/fs-extra/lib/copy/copy.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "3c0bb54aa431fac2a9b0a1c26562e465e4b540d20cb40e5400d9c2d01f0d9dfd"
+	},
+	"node_modules/@electron/fuses/node_modules/fs-extra/lib/copy/index.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "06f95d3bdf12008047c254fdd977e43ca451c1470ab7ef0fefbb48b7dbb39008"
+	},
+	"node_modules/@electron/fuses/node_modules/fs-extra/lib/json/output-json.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "1f58fdf60cdbc9d34cd7a4e2688be218572bc8beb4ce3ce377dca515a06e3b50"
+	},
+	"node_modules/@electron/fuses/node_modules/fs-extra/lib/json/output-json-sync.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "7e84f5c478c02d8507238dc355ed5fe649fe61959bdc100da7c2a29599bcb714"
+	},
+	"node_modules/@electron/fuses/node_modules/fs-extra/lib/json/index.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "c5ac6a8005308e5bb36619fed225c987872300d356fa95d0d56878029ebbdc45"
+	},
+	"node_modules/@electron/fuses/node_modules/fs-extra/lib/index.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "24ca8c7fb0666041f080415bf1bcfb4ae4815a21073557d9a85c01173f8947c8"
+	},
+	"node_modules/@electron/fuses/dist/config.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "7c54c68eb5844736ab5f4b0949ff48c3512aed6e6b6d7c4d5138c21730fb76b0"
+	},
+	"node_modules/@electron/fuses/dist/constants.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "ff339b9cc7c8a5d67ce848d59945b3c36018e3cc6975a7b41ccd5ce4f996ad2f"
+	},
+	"node_modules/@electron/fuses/dist/index.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "c752d0204e8abd08d029c20de6245029cf6e5e9f8cc019d337be1755c1e33484"
+	},
+	"node_modules/@electron/asar/node_modules/brace-expansion/index.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "28659473c69e1ea346e5c594964409508a186a353135df811e6cb9841f2844e5"
+	},
+	"node_modules/@electron/asar/node_modules/minimatch/minimatch.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "746849f267c4868a53729225bd85c7dccd387712136fb305fcc0a3eadd4a3d9d"
+	},
+	"node_modules/@electron/asar/lib/wrapped-fs.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "601c3c2151986f62de3b7297e3630873a6924230852c7f36c0b172cdabf0a4de"
+	},
+	"node_modules/@electron/asar/lib/integrity.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "107c43e596dd644d9896899e2be60465983b42e18ead2e3c7993fdcbee0c8764"
+	},
+	"node_modules/@electron/asar/lib/filesystem.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "4ed3f336af7d7906c374222c0a5d085ba91471eba9e2b55e700190fe3cfcc24b"
+	},
+	"node_modules/@electron/asar/lib/pickle.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "771c59cf05e42ee55f5bf03cbabc84f86fd623dee1bd725f0602812637fa0867"
+	},
+	"node_modules/@electron/asar/lib/disk.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "849ea3eebaf945978a48ae1f08d429d235430f4f8cc94486d124755a7fa379bb"
+	},
+	"node_modules/fs.realpath/old.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "07245a82717f9bfa2a63b9784284a1b7fc43ff5fcb4af2a94bce5f83611d4a2f"
+	},
+	"node_modules/fs.realpath/index.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "2e334ba43cd4852f7a3ed68159029167c05d7fa6af536e6ef177eb868ccd1bb8"
+	},
+	"node_modules/inherits/inherits.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "bb380f32bef5feb18678f0f45f88073fed5d7a0069a309132cb2080cd553d5c7"
+	},
+	"node_modules/path-is-absolute/index.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "4eb1119c3eeccc4d8e8841b77d062abaf4572b332801f5b16175bc3311b5d8f1"
+	},
+	"node_modules/@electron/asar/node_modules/glob/glob.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "b8f35657ca927593d0f9e1aae3a8cfe9c33c697bf3c5733c2f6727f25ae25be1"
+	},
+	"node_modules/@electron/asar/node_modules/glob/common.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "c31f29d45bfd958dc91f3bf2c3b06fe9424cff586822934d525be0a613c0bf57"
+	},
+	"node_modules/@electron/asar/node_modules/glob/sync.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "0f61227f4b55297f1ad16798c53e6a6dd55d633856f153133716413b7c5f61ad"
+	},
+	"node_modules/inflight/inflight.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "e33ea098a91d2c41be886fbbcecacb9799fe183d8a446f138a4786cb3d809802"
+	},
+	"node_modules/@electron/asar/lib/crawlfs.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "d12dc17a359baebd2f35a7057e1af4dbc15779a478aa6a767afee77027f2aa5e"
+	},
+	"node_modules/@electron/asar/lib/asar.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "91e89e96324626b140f3e897dffaca6e3cbb1135c4192ce6ceaa0e84af4ba152"
+	},
+	"node_modules/isexe/dist/commonjs/index.min.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "abf1fa35f4710b8f74351b63e61945b59994cdbceaf78cb9e309fb8b582a3a35"
+	},
+	"node_modules/which/lib/index.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "d9d32d45a01826692a1a0c70d40c6182aa0405713166ecd4a3bd3df68d3b90bf"
+	},
+	"node_modules/builder-util/node_modules/builder-util-runtime/out/httpExecutor.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "4d3b1247b0e7f620e6cdb88628e4c4c3eef2bccbd2805962edbffd6017c4dcca"
+	},
+	"node_modules/builder-util/node_modules/builder-util-runtime/out/objects.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "48c8df97f69197a400714a0bdbd3674485a511b8606cf3dc84448a576babcd10"
+	},
+	"node_modules/builder-util/node_modules/builder-util-runtime/out/index.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "140b927a94d361c3298a019ba7cf64f355b8ebf40e04b748be3c5b30ceb1e0c6"
+	},
+	"node_modules/builder-util/out/stringUtil.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "70a9c2b91da55fb393f4c8c8fc1ce2e7ef90abbfcb640d604cea432e556ac222"
+	},
+	"node_modules/builder-util/out/envUtil.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "7f4dd15ec3bc26593f5e419d763b5e8077767a414e6ac1ca07c048fc958bd88b"
+	},
+	"node_modules/builder-util/out/ksuid.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "68116a225a887046b917acc158ea7259da563d2bcc2b04714cf732cb432b1d8f"
+	},
+	"node_modules/builder-util/out/cscLink.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "851fee9fb2f7b6ae484180e13823c262346bdeefe1d87ce8d8b0a960bd40ddc9"
+	},
+	"node_modules/electron-builder/node_modules/builder-util-runtime/out/httpExecutor.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "13050c5e047556326a2a17bc991dcf1e0f58b20409e0476486a6fd0ed6c577f6"
+	},
+	"node_modules/electron-builder/node_modules/builder-util-runtime/out/objects.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "48c8df97f69197a400714a0bdbd3674485a511b8606cf3dc84448a576babcd10"
+	},
+	"node_modules/electron-builder/node_modules/builder-util-runtime/out/index.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "140b927a94d361c3298a019ba7cf64f355b8ebf40e04b748be3c5b30ceb1e0c6"
+	},
+	"node_modules/app-builder-lib/node_modules/builder-util-runtime/out/httpExecutor.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "13050c5e047556326a2a17bc991dcf1e0f58b20409e0476486a6fd0ed6c577f6"
+	},
+	"node_modules/app-builder-lib/node_modules/builder-util-runtime/out/objects.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "48c8df97f69197a400714a0bdbd3674485a511b8606cf3dc84448a576babcd10"
+	},
+	"node_modules/app-builder-lib/node_modules/builder-util-runtime/out/index.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "140b927a94d361c3298a019ba7cf64f355b8ebf40e04b748be3c5b30ceb1e0c6"
+	},
+	"node_modules/app-builder-lib/out/util/electronGet.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "3452ca5b9a2f29dd6460f0cc9937be2dc1bbbf36809f410649a015b35a607b48"
+	},
+	"node_modules/app-builder-lib/out/toolsets/7zip.js": {
+		"who": "ivk",
+		"when": "2026-07-27",
+		"hash": "8cb05fdfef799fa7553191f3651da10a2e8532590b05d1782e2c46c445d92272"
 	}
 }
