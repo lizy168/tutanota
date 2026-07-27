@@ -974,7 +974,6 @@ export class MailViewModel {
 	}
 
 	deinit() {
-		this.eventController.removeEntityUpdatesListener(this.entityUpdatesListener)
 		this.connectivityModel.removeConnectionStateListener(this.connectionStateListener)
 	}
 }
