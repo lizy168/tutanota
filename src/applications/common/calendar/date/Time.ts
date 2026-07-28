@@ -107,10 +107,6 @@ export class Time {
 		return this._hour === otherTime._hour && this._minute === otherTime._minute
 	}
 
-	toString(amPmFormat?: { withAmPmSuffix: boolean }): string {
-		return amPmFormat ? this.to12HourString(amPmFormat.withAmPmSuffix) : this.to24HourString()
-	}
-
 	to12HourString(withAmPmSuffix: boolean): string {
 		const minutesString = pad(this._minute, 2)
 
