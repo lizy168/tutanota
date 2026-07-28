@@ -2,6 +2,7 @@ import {
 	assertNotNull,
 	downcast,
 	first,
+	isNotNull,
 	KeyVersion,
 	lazy,
 	neverNull,
@@ -791,7 +792,7 @@ export class CryptoFacade implements SessionKeyResolver, CryptoNetworkHelper {
 	public setOwnerEncSessionKey(instance: Entity, ownerEncSessionKey: VersionedEncryptedKey, ownerGroup?: Id): void {
 		instance._ownerEncSessionKey = ownerEncSessionKey.key
 		instance._ownerKeyVersion = ownerEncSessionKey.encryptingKeyVersion.toString()
-		if (ownerGroup) {
+		if (isNotNull(ownerGroup)) {
 			instance._ownerGroup = ownerGroup
 		}
 	}
